@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-4 dark:text-gray-200">
+    <div class="bg-gray-800 shadow-2xl rounded-lg p-8 w-full max-w-md border border-gray-700">
+        <h1 class="text-2xl font-bold text-center text-gray-100 mb-6">
+            <i class="fas fa-file-contract mr-2"></i>Gerador 
+        </h1>
+        
+        <form id="messageForm" class="space-y-4">
+            <div>
+                <label for="cliente" class="block text-sm font-medium text-gray-300">Nome do Cliente</label>
+                <input type="text" id="cliente" required 
+                    class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 shadow-sm 
+                           focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+            </div>
+
+            <div>
+                <label for="advogado" class="block text-sm font-medium text-gray-300">Nome do Advogado</label>
+                <input type="text" id="advogado" required 
+                    class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 shadow-sm 
+                           focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+            </div>
+
+            <div>
+                <label for="reu" class="block text-sm font-medium text-gray-300">Nome do Réu</label>
+                <input type="text" id="reu" required 
+                    class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 shadow-sm 
+                           focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+            </div>
+
+            <div>
+                <label for="processo" class="block text-sm font-medium text-gray-300">Número do Processo</label>
+                <input type="text" id="processo" required 
+                    class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 shadow-sm 
+                           focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+            </div>
+
+            <div>
+                <label for="valor" class="block text-sm font-medium text-gray-300">Valor da Ação</label>
+                <input type="text" id="valor" required 
+                    class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 shadow-sm 
+                           focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+            </div>
+
+            <button type="submit" 
+                class="w-full bg-indigo-700 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 flex items-center justify-center">
+                <i class="fas fa-copy mr-2"></i>Gerar e Copiar Mensagem
+            </button>
+        </form>
+
+        <div id="mensagemGerada" class="mt-4 p-3 bg-gray-700 rounded-md hidden">
+            <p id="mensagemTexto" class="text-sm text-gray-200"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('messageForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Coletando informações do usuário
+            const cliente = document.getElementById('cliente').value;
+            const advogado = document.getElementById('advogado').value;
+            const reu = document.getElementById('reu').value;
+            const processo = document.getElementById('processo').value;
+            const valor = document.getElementById('valor').value;
+
+            // Construindo a mensagem
+            const mensagem = `Boa tarde, ${cliente}! aqui quem fala é o Dr. ${advogado}
+Houve movimentação no seu processo *${reu}*
+${processo}
+Mediante provas e laudos, o Juiz do Fórum deu como ordem o encerramento da causa a seu favor. 
+Você tem o valor de R$ ${valor} Disponível para restituição.`;
+
+            // Exibir mensagem gerada
+            const mensagemTexto = document.getElementById('mensagemTexto');
+            const mensagemGerada = document.getElementById('mensagemGerada');
+            mensagemTexto.textContent = mensagem;
+            mensagemGerada.classList.remove('hidden');
+
+            // Copiar para área de transferência
+            navigator.clipboard.writeText(mensagem).then(() => {
+                alert('Mensagem copiada para a área de transferência!');
+            }).catch(err => {
+                console.error('Erro ao copiar: ', err);
+            });
+        });
+    </script>
+</body>
+</html>
